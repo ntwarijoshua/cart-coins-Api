@@ -10,10 +10,12 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract, HasRoleAndPermissions
 {
     use Authenticatable, CanResetPassword, HasRoleAndPermission;
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
@@ -22,6 +24,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $fillable = [
         'name', 'email', 'password',
     ];
+    protected $date = ['deleted_at'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -29,6 +32,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token','created_at','updated_at','deleted_at'
     ];
 }

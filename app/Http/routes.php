@@ -21,5 +21,12 @@ Route::group(['prefix' => 'api/v1'], function () {
 
     #Need token to access those router
     Route::group(['middleware'=>['jwt.auth']], function(){
+        //Get all roles
+        Route::get('roles', 'RolesController@index');
+        //Users router
+        Route::resource('users', 'UsersController');
+        Route::put('change-password/{id}','UsersController@change_password');
+        //Companies router
+        #Route::resource('company','CompaniesController');
     });
 });
