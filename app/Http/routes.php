@@ -14,3 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group(['prefix' => 'api/v1'], function () {
+    Route::post('register', 'UsersController@register');
+    Route::post('login','AuthenticationController@authenticate');
+
+    #Need token to access those router
+    Route::group(['middleware'=>['jwt.auth']], function(){
+    });
+});
