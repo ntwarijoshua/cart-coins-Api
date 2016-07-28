@@ -31,5 +31,7 @@ Route::group(['prefix' => 'api/v1'], function () {
         Route::resource('company-categories', 'CompanyCategoriesController');
         //Companies router
         Route::resource('companies','CompaniesController');
+        //Subscription route
+        Route::resource('subscribe','SubscriptionsController');
     });
 });
