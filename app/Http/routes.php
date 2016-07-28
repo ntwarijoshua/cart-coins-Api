@@ -38,8 +38,8 @@ Route::group(['prefix' => 'api/v1'], function () {
             //active company
             Route::get('active', 'SubscriptionsController@active');
             Route::get('deactive', 'SubscriptionsController@deActive');
-
-
+            //Points plan route
+            Route::resource('plan', 'PlansController');
         });
     });
 });

@@ -57,10 +57,11 @@ class SubscriptionsController extends Controller
         else
             return JsonResponse::create(['error' => 'not_allowed'],401);
     }
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param SubscriptionRequest|Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(SubscriptionRequest $request)
