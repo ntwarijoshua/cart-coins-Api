@@ -22,7 +22,16 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        if($user->is('admin')){
+            return JsonResponse::create(User::all());
+        }
+        elseif($user){
+            return JsonResponse::create(User::findOrFail($user->id));
+        }
+        else{
+            return JsonResponse::create(['error' => 'not_allowed'],401);
+        }
     }
 
     /**
@@ -64,19 +73,13 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-
-
+        $user = Auth::user();
+        if($user->isAdmin()) {
+            return JsonResponse::create(User::findOrFail($id));
+        }
+        else{
+            return JsonResponse::create(['error' => 'not_allowed'],401);
+        }
     }
 
     /**

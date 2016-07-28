@@ -26,7 +26,10 @@ Route::group(['prefix' => 'api/v1'], function () {
         //Users router
         Route::resource('users', 'UsersController');
         Route::put('change-password/{id}','UsersController@change_password');
+
+        //Company category router
+        Route::resource('company-categories', 'CompanyCategoriesController');
         //Companies router
-        #Route::resource('company','CompaniesController');
+        Route::resource('companies','CompaniesController');
     });
 });
