@@ -112,7 +112,7 @@ class UsersController extends Controller
         $user = Auth::user();
         if($user->id == $id || $user->is('admin')){
             $find_user = User::findOrFail($id);
-            $request->merge(['password' => Hash::make('password')]);
+            $request->merge(['password' => Hash::make($request->input('password'))]);
             $data = $request->all();
             $find_user->update($data);
             return JsonResponse::create($find_user);
