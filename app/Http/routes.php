@@ -21,6 +21,8 @@ Route::group(['prefix' => 'api/v1'], function () {
 
     #Need token to access those router
     Route::group(['middleware'=>['jwt.auth']], function(){
+
+        Route::group(['middleware' => ['subscribed']], function(){
         //Get all roles
         Route::get('roles', 'RolesController@index');
         //Users router
@@ -33,5 +35,7 @@ Route::group(['prefix' => 'api/v1'], function () {
         Route::resource('companies','CompaniesController');
         //Subscription route
         Route::resource('subscribe','SubscriptionsController');
+        });
     });
 });
+
