@@ -32,6 +32,31 @@ class SubscriptionsController extends Controller
             return JsonResponse::create(['error' => 'not_allowed'],401);
     }
 
+    public function active(){
+        $user = Auth::user();
+        $company = Company::first();
+        if($user->isAdmin()){
+            return JsonResponse::create(Subscription::with('subscribe','company')->where('status', "active")->get());
+        }
+        elseif($user->id == $company->manager_id){
+            return JsonResponse::create(Subscription::with('subscribe','company')->where('company_id',$company->id)->where('status', "active")->get());
+        }
+        else
+            return JsonResponse::create(['error' => 'not_allowed'],401);
+    }
+
+    public function deActive(){
+        $user = Auth::user();
+        $company = Company::first();
+        if($user->isAdmin()){
+            return JsonResponse::create(Subscription::with('subscribe','company')->where('status', "deactive")->get());
+        }
+        elseif($user->id == $company->manager_id){
+            return JsonResponse::create(Subscription::with('subscribe','company')->where('company_id',$company->id)->where('status', "deactive")->get());
+        }
+        else
+            return JsonResponse::create(['error' => 'not_allowed'],401);
+    }
     /**
      * Store a newly created resource in storage.
      *

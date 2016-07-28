@@ -24,17 +24,22 @@ Route::group(['prefix' => 'api/v1'], function () {
 
         Route::group(['middleware' => ['subscribed']], function(){
         //Get all roles
-        Route::get('roles', 'RolesController@index');
-        //Users router
-        Route::resource('users', 'UsersController');
-        Route::put('change-password/{id}','UsersController@change_password');
+            Route::get('roles', 'RolesController@index');
+            //Users router
+            Route::resource('users', 'UsersController');
+            Route::put('change-password/{id}','UsersController@change_password');
 
-        //Company category router
-        Route::resource('company-categories', 'CompanyCategoriesController');
-        //Companies router
-        Route::resource('companies','CompaniesController');
-        //Subscription route
-        Route::resource('subscribe','SubscriptionsController');
+            //Company category router
+            Route::resource('company-categories', 'CompanyCategoriesController');
+            //Companies router
+            Route::resource('companies','CompaniesController');
+            //Subscription route
+            Route::resource('subscribe','SubscriptionsController');
+            //active company
+            Route::get('active', 'SubscriptionsController@active');
+            Route::get('deactive', 'SubscriptionsController@deActive');
+
+
         });
     });
 });
