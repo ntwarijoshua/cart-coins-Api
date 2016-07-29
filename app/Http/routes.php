@@ -42,6 +42,8 @@ Route::group(['prefix' => 'api/v1'], function () {
             Route::resource('plan', 'PlansController');
             //Sticker route
             Route::resource('stickers', 'StickersController');
+            //Shop sticker route
+            Route::resource('shop-sticker', 'ShopStickersController');
         });
     });
 });

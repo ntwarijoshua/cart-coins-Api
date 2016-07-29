@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StickerRequest;
 use App\Sticker;
 use Illuminate\Http\Request;
 
@@ -28,10 +29,10 @@ class StickersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param StickerRequest|Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StickerRequest $request)
     {
         $user = Auth::user();
         if($user){
