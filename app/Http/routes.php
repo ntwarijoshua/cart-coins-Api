@@ -40,6 +40,8 @@ Route::group(['prefix' => 'api/v1'], function () {
             Route::get('deactive', 'SubscriptionsController@deActive');
             //Points plan route
             Route::resource('plan', 'PlansController');
+            //Sticker route
+            Route::resource('stickers', 'StickersController');
         });
     });
 });
