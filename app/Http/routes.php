@@ -16,16 +16,45 @@ Route::get('/', function () {
     return view('welcome');
 });
 // Generate a login URL
-Route::get('/facebook/login', function(SammyK\LaravelFacebookSdk\LaravelFacebookSdk $fb)
-{
-    // Send an array of permissions to request
-    $login_url = $fb->getLoginUrl(['email']);
+//Route::get('/facebook/login', function(SammyK\LaravelFacebookSdk\LaravelFacebookSdk $fb)
+//{
+//    // Send an array of permissions to request
+//    $login_url = $fb->getLoginUrl(['email']);
+//
+//    // Obviously you'd do this in blade :)
+//    echo '<a href="' . $login_url . '">Login with Facebook</a>';
+//});
 
-    // Obviously you'd do this in blade :)
-    echo '<a href="' . $login_url . '">Login with Facebook</a>';
+Route::get('/facebook/login', function(SammyK\LaravelFacebookSdk\LaravelFacebookSdk $fb) {
+    $login_link = $fb
+        ->getRedirectLoginHelper()
+        ->getLoginUrl('https://cartcoins.com/facebook/callback', ['email', 'user_events']);
+
+    echo '<a href="' . $login_link . '">Log in with Facebook</a>';
 });
+
+
+Route::get('/facebook/callback', function(SammyK\LaravelFacebookSdk\LaravelFacebookSdk $fb) {
+    try {
+        $token = $fb
+            ->getRedirectLoginHelper()
+            ->getAccessToken();
+    } catch (Facebook\Exceptions\FacebookSDKException $e) {
+        // Failed to obtain access token
+        dd($e->getMessage());
+    }
+
+    if (!$token) {
+        // User denied the request
+        exit("not allowed");
+    }else{
+        exit("allowed");
+    }
+});
+
+
 // Endpoint that is redirected to after an authentication attempt
-Route::get('/facebook/callback/{code}', 'AuthenticationController@VerifyFacebook');
+//Route::get('/facebook/callback/{code}', 'AuthenticationController@VerifyFacebook');
 //    function(SammyK\LaravelFacebookSdk\LaravelFacebookSdk $fb)
 //{
     // Obtain an access token.
