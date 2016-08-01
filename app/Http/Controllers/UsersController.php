@@ -41,7 +41,7 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function register(UsersRequest $request){
-        $request->merge(['password' => Hash::make($request->input('password'))]);
+        $request->merge(['password' => Hash::make($request->input('password')), 'keyword' => dechex( mt_rand(1000000, 9999999) )]);
         $data = $request->all();
         return JsonResponse::create(User::create($data));
     }
