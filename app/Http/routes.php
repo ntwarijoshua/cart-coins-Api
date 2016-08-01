@@ -14,8 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
-
+// Generate a login URL
 Route::get('/facebook/login', function(SammyK\LaravelFacebookSdk\LaravelFacebookSdk $fb)
 {
     // Send an array of permissions to request
@@ -24,7 +23,8 @@ Route::get('/facebook/login', function(SammyK\LaravelFacebookSdk\LaravelFacebook
     // Obviously you'd do this in blade :)
     echo '<a href="' . $login_url . '">Login with Facebook</a>';
 });
-Route::get('facebook/callback', function(SammyK\LaravelFacebookSdk\LaravelFacebookSdk $fb)
+// Endpoint that is redirected to after an authentication attempt
+Route::get('/facebook/callback', function(SammyK\LaravelFacebookSdk\LaravelFacebookSdk $fb)
 {
     // Obtain an access token.
     try {
@@ -88,8 +88,6 @@ Route::get('facebook/callback', function(SammyK\LaravelFacebookSdk\LaravelFacebo
 
     return redirect('/')->with('message', 'Successfully logged in with Facebook');
 });
-
-
 
 
 Route::group(['prefix' => 'api/v1'], function () {
