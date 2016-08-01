@@ -30,6 +30,8 @@ class AuthenticationController extends Controller
     }
 
     public function VerifyFacebook($fb){
+
+        exit("here");
         try {
             $token = $fb->getAccessTokenFromRedirect();
         } catch (FacebookSDKException $e) {
