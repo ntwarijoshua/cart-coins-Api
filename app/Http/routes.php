@@ -44,6 +44,8 @@ Route::group(['prefix' => 'api/v1'], function () {
             Route::resource('stickers', 'StickersController');
             //Shop sticker route
             Route::resource('shop-sticker', 'ShopStickersController');
+            //Post router
+            Route::resource('posts', 'PostsController');
         });
     });
 });
