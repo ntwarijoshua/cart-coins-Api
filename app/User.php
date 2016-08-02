@@ -34,4 +34,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $hidden = [
         'password', 'remember_token','created_at','updated_at','deleted_at'
     ];
+
+    public function company(){
+        return $this->belongsToMany('App\Company','user_points')->withPivot('earned_point','company_id')->withTimestamps();
+    }
+
+    public function userPoint(){
+        return $this->belongsToMany('App\Company','user_point_company')
+            ->withPivot('user_id', 'post','points','point_date')->withTimestamps();
+
+    }
 }

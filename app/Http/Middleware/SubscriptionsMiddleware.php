@@ -21,10 +21,8 @@ class SubscriptionsMiddleware
     {
         $user = Auth::user();
         $today = date("Y-m-d");
-        if(($user->isAdmin())){
-            return $next($request);
-        }
-        else {
+
+        if($user->isShop()) {
             $user_exist = Company::where('manager_id', $user->id)->first();
             $sub = Subscription::where('company_id', $user_exist->id)->first();
 
@@ -37,6 +35,8 @@ class SubscriptionsMiddleware
             else
                 $sub->status = 'active';
                 $sub->save();
+            return $next($request);
+        }elseif($user->isAdmin() || $user){
             return $next($request);
         }
     }

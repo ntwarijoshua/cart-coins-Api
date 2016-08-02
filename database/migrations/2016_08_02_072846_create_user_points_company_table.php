@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserPoints extends Migration
+class CreateUserPointsCompanyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,17 @@ class CreateUserPoints extends Migration
      */
     public function up()
     {
-        Schema::create('user_points', function (Blueprint $table) {
+        Schema::create('user_point_company', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned()->index()->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('company_id')->unsigned()->index();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-            $table->double('earned_point', 15, 2);
-            $table->softDeletes();
+            $table->integer('user_id')->unsigned()->index()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('post')->nullable();
+            $table->string('points');
+            $table->string('point_date')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -31,6 +33,6 @@ class CreateUserPoints extends Migration
      */
     public function down()
     {
-        Schema::drop('user_points');
+        Schema::drop('user_point_company');
     }
 }
