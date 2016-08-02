@@ -95,14 +95,12 @@ class SubSharedController extends Controller
     }
 
     private function AdjustPoint($create,$share_exist){
-        //return JsonResponse::create(['created' => $create, 'shared' => $share_exist],200);
-        //exit("here");
         $user = Auth::user();
         $company = Post::findOrFail($share_exist->post_id);
 
-        $the_relation = Point::where('user_id',$share_exist->user_id)
-            ->where('company_id', $company->company_id )
-            ->first();
+//        $the_relation = Point::where('user_id',$share_exist->user_id)
+//            ->where('company_id', $company->company_id )
+//            ->first();
 
         $plan = Plan::where('company_id', $company->company_id)->first();
         if(empty($plan)){
