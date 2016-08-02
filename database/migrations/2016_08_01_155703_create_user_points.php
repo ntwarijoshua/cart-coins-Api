@@ -19,6 +19,7 @@ class CreateUserPoints extends Migration
             $table->integer('company_id')->unsigned()->index();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->double('earned_point', 15, 2);
+            $table->boolean('status')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

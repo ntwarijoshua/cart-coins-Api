@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Http\Requests\SharePostRequest;
 use App\Plan;
 use App\Point;
 use App\Post;
@@ -23,16 +24,21 @@ class SharedPostsController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        if($user){
+            return JsonResponse::create(SharedPost::with('user','post')->where('user_id', $user->id)->get());
+        }else{
+            return JsonResponse::create(['error' => 'not_allowed'],401);
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param SharePostRequest|Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SharePostRequest $request)
     {
         $user = Auth::user();
         if($user){
@@ -41,6 +47,8 @@ class SharedPostsController extends Controller
             $share = SharedPost::create($request->all());
             if($share AND $post_exist){
                 return $this->UpdatePoint($share);
+            }else{
+                return JsonResponse::create(['error' => 'many_request'],429);
             }
             //return JsonResponse::create($share);
         }else{
@@ -64,7 +72,7 @@ class SharedPostsController extends Controller
             $the_relation = Point::where('user_id',$relation->pivot['user_id'])
                                  ->where('company_id', $company->company_id )
                                  ->first();
-            //return JsonResponse::create($the_relation);
+
             if(!empty($the_relation)) {
 
                 $adder = $the_relation->earned_point + $plan->points;
@@ -76,12 +84,10 @@ class SharedPostsController extends Controller
                 $user->userPoint()->attach($company->company_id, [
                     'user_id' => $user->id,
                     'points' => $plan->points,
-                    'point_date' => date('y-m-d'),
+                    'point_date' => date('Y-m-d'),
                     'post'  => $company->id
                 ]);
                   return JsonResponse::create($user);
-
-
 
 
             }else{
@@ -99,9 +105,6 @@ class SharedPostsController extends Controller
                     'post'  => $company->id
                 ]);
                 return JsonResponse::create($user);
-
-
-
             }
 
         }
@@ -126,40 +129,14 @@ class SharedPostsController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $user = Auth::user();
+        if($user){
+            return JsonResponse::create(SharedPost::with('user','post')
+                ->where('user_id', $user->id)
+                ->where('id', $id)
+                ->get());
+        }else{
+            return JsonResponse::create(['error' => 'not_allowed'],401);
+        }
     }
 }

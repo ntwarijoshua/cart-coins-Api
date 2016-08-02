@@ -88,6 +88,8 @@ Route::group(['prefix' => 'api/v1'], function () {
             Route::resource('posts', 'PostsController');
             //Share post route
             Route::resource('shared-post', 'SharedPostsController');
+            //Sub share post route
+            Route::resource('sub-share', 'SubSharedController');
 
         });
     });
