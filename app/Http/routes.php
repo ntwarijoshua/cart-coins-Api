@@ -59,19 +59,41 @@ Route::group(['prefix' => 'api/v1'], function () {
     Route::post('login','AuthenticationController@authenticate');
 
 
-    #Need token to access those router
+    #Need token to access those routes
     Route::group(['middleware'=>['jwt.auth']], function(){
+        //reward route
+        Route::resource('rewards', 'RewardsController', ['only' => ['index', 'show']]);
 
+        //company category reward
+        Route::resource('company-categories', 'CompanyCategoriesController', ['only' => ['index','show']]);
+
+        //Points plan route
+        Route::resource('plan', 'PlansController', ['only' => ['index', 'show']]);
+
+        //Sticker route
+        Route::resource('stickers', 'StickersController', ['only' => ['index', 'store', 'show', 'destroy']]);
+
+        //Post router
+        Route::resource('posts', 'PostsController', ['only' => ['index', 'show']]);
+
+        //Share post route
+        Route::resource('shared-post', 'SharedPostsController', ['only' => ['index', 'show','store']]);
+
+        //Sub share post route
+        Route::resource('sub-share', 'SubSharedController', ['only' => ['index', 'store', 'show', 'destroy']]);
+
+
+        //Need subscription to access those routes
         Route::group(['middleware' => ['subscribed']], function(){
         //Get all roles
             Route::get('roles', 'RolesController@index');
-            //Users router
+            //Users route
             Route::resource('users', 'UsersController');
             Route::put('change-password/{id}','UsersController@change_password');
 
-            //Company category router
-            Route::resource('company-categories', 'CompanyCategoriesController');
-            //Companies router
+            //Company category route
+            Route::resource('company-categories', 'CompanyCategoriesController', ['except' => ['index','show']]);
+            //Companies route
             Route::resource('companies','CompaniesController');
             //Subscription route
             Route::resource('subscribe','SubscriptionsController');
@@ -79,17 +101,19 @@ Route::group(['prefix' => 'api/v1'], function () {
             Route::get('active', 'SubscriptionsController@active');
             Route::get('deactive', 'SubscriptionsController@deActive');
             //Points plan route
-            Route::resource('plan', 'PlansController');
+            Route::resource('plan', 'PlansController', ['except' => ['index', 'show']]);
             //Sticker route
-            Route::resource('stickers', 'StickersController');
+            Route::resource('stickers', 'StickersController', ['except' => ['index', 'store', 'show', 'destroy']]);
             //Shop sticker route
             Route::resource('shop-sticker', 'ShopStickersController');
             //Post router
-            Route::resource('posts', 'PostsController');
+            Route::resource('posts', 'PostsController', ['except' => ['index', 'show']]);
             //Share post route
-            Route::resource('shared-post', 'SharedPostsController');
+            Route::resource('shared-post', 'SharedPostsController', ['except' => ['index', 'show','store']]);
             //Sub share post route
-            Route::resource('sub-share', 'SubSharedController');
+            Route::resource('sub-share', 'SubSharedController', ['except' => ['index', 'store', 'show', 'destroy']]);
+            //Rewards route
+            Route::resource('rewards', 'RewardsController', ['only' => ['store', 'update', 'destroy']]);
 
         });
     });

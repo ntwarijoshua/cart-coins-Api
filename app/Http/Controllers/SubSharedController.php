@@ -23,7 +23,14 @@ class SubSharedController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        if($user){
+            return JsonResponse::create(SubShared::with('user', 'shared')->where('user_id',$user->id)->get());
+        }elseif($user->isAdmin()){
+            return JsonResponse::create(SubShared::with('user', 'shared')->get());
+        }else{
+            return JsonResponse::create(['error' => 'not_allowed'],401);
+        }
     }
 
     /**
@@ -134,40 +141,14 @@ class SubSharedController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $user = Auth::user();
+        if($user){
+            return JsonResponse::create(SubShared::with('user', 'shared')
+                ->where('user_id',$user->id)->where('id',$id)->get());
+        }elseif($user->isAdmin()){
+            return JsonResponse::create(SubShared::with('user', 'shared')->where('id',$id)->get());
+        }else{
+            return JsonResponse::create(['error' => 'not_allowed'],401);
+        }
     }
 }

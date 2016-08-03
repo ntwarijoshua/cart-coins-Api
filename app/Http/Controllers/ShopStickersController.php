@@ -26,6 +26,8 @@ class ShopStickersController extends Controller
             return JsonResponse::create(ShopSticker::with('sticker', 'company')->get());
         }elseif ($user->isShop() && $user->id == $company->manager_id){
             return JsonResponse::create(ShopSticker::with('sticker', 'company')->where('company_id', $company->id)->get());
+        }else{
+            return JsonResponse::create(['error' => 'not_allowed'],401);
         }
     }
 

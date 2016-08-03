@@ -23,6 +23,8 @@ class StickersController extends Controller
         $user = Auth::user();
         if($user){
             return JsonResponse::create(Sticker::with('user')->get());
+        }else{
+            return JsonResponse::create(['error' => 'not_allowed'],401);
         }
     }
 

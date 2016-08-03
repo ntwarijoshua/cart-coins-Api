@@ -5,8 +5,9 @@ namespace App\Http\Middleware;
 use App\Company;
 use App\Subscription;
 use Closure;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\JsonResponse;
+//use Symfony\Component\HttpFoundation\JsonResponse;
 
 class SubscriptionsMiddleware
 {
@@ -36,8 +37,12 @@ class SubscriptionsMiddleware
                 $sub->status = 'active';
                 $sub->save();
             return $next($request);
-        }elseif($user->isAdmin() || $user){
+        }
+        elseif($user->isAdmin()){
             return $next($request);
+        }
+        else{
+            return JsonResponse::create(['error' => 'subscription_required'],401);
         }
     }
 }
