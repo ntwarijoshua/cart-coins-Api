@@ -92,7 +92,7 @@ class SharedPostsController extends Controller
 
             }else{
                 //return JsonResponse::create("no relation with comp");
-                $new_point = new Point();
+                $new_point =  Point::where('user_id',$user->id)->where('company_id',$company->company_id)->first();
                 $new_point->company_id = $company->company_id;
                 $new_point->user_id = $user->id;
                 $new_point->earned_point = $plan->points;

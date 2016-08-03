@@ -105,10 +105,6 @@ class SubSharedController extends Controller
         $user = Auth::user();
         $company = Post::findOrFail($share_exist->post_id);
 
-//        $the_relation = Point::where('user_id',$share_exist->user_id)
-//            ->where('company_id', $company->company_id )
-//            ->first();
-
         $plan = Plan::where('company_id', $company->company_id)->first();
         if(empty($plan)){
             return JsonResponse::create(['error' => 'bad_request'],400);
