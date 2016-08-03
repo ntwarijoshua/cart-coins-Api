@@ -115,6 +115,7 @@ Route::group(['prefix' => 'api/v1'], function () {
             //Rewards route
             Route::resource('rewards', 'RewardsController', ['only' => ['store', 'update', 'destroy']]);
 
+
         });
     });
 });

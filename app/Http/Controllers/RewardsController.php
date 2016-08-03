@@ -91,18 +91,12 @@ class RewardsController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $user = Auth::user();
+        if($user){
+            return JsonResponse::create(Reward::with('company')->where('id',$id)->get());
+        }else{
+            return JsonResponse::create(['error' => 'not_allowed'],401);
+        }
     }
 
     /**
@@ -114,7 +108,46 @@ class RewardsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = Auth::user();
+        $reward_exist = Reward::findOrFail($id);
+        $company = Company::findOrFail($reward_exist->company_id);
+        if($user->id == $company->manager_id){
+            $photo = Input::file('photo');
+            if(isset($photo)){
+                $request->merge(['photo' => $photo]);
+                $data = Input::all();
+                $reward_exist->update($data);
+                if($reward_exist){
+                    return $this->UpdatePhoto($reward_exist);
+                }else{
+                    return JsonResponse::create(['error' => 'many_request'],429);
+                }
+            }else{
+                $data = Input::all();
+                $reward_exist->update($data);
+                return JsonResponse::create($reward_exist);
+            }
+        }else{
+            return JsonResponse::create(['error' => 'not_allowed'],401);
+        }
+    }
+
+    public function UpdatePhoto($reward_exist){
+        $extension = Input::file('photo')->getClientOriginalExtension();
+
+        $filename = $reward_exist->id. '.' . $extension;
+
+        $destination_path =  'uploads/rewards/';
+        $reward_exist->photo = $destination_path.$filename;
+        Input::file('photo')->move($destination_path, $filename);
+
+        $reward_exist->save();
+        if($reward_exist) {
+            return JsonResponse::create(['success' => 'reward_file_updated', 'reward' => $reward_exist], 200);
+        }
+        else{
+            return JsonResponse::create(['error' => 'many_request'],429);
+        }
     }
 
     /**
@@ -125,6 +158,15 @@ class RewardsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = Auth::user();
+        $reward_exist = Reward::findOrFail($id);
+        $company = Company::findOrFail($reward_exist->company_id);
+        if($user->id == $company->manager_id){
+            $reward_exist->delete();
+            return JsonResponse::create(['success' => 'deleted'],200);
+        }
+        else{
+            return JsonResponse::create(['error' => 'not_allowed'],401);
+        }
     }
 }
