@@ -82,6 +82,8 @@ Route::group(['prefix' => 'api/v1'], function () {
         //Sub share post route
         Route::resource('sub-share', 'SubSharedController', ['only' => ['index', 'store', 'show', 'destroy']]);
 
+        //reviews controller
+        Route::resource('reviews','ReviewsController');
 
         //Need subscription to access those routes
         Route::group(['middleware' => ['subscribed']], function(){
@@ -117,6 +119,7 @@ Route::group(['prefix' => 'api/v1'], function () {
 
             //User reward route
             Route::resource('user-reward', 'UserRewardsController');
+
 
         });
     });
