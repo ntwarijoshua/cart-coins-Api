@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['middleware' => 'cors'], function(Router $router){
+Route::group(['middleware' => 'cors'], function(){
    // $router->get('api', 'ApiController@index');
 
 Route::get('/', function () {
