@@ -12,6 +12,7 @@ return [
      |
      */
     'supportsCredentials' => true,
+    'allowedOrigins' => ['http://discountville.local'],
     'allowedHeaders' => ['*'],
     'allowedMethods' => ['*'],
     'exposedHeaders' => [],
