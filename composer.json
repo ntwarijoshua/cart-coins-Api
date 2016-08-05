@@ -10,7 +10,9 @@
         "tymon/jwt-auth": "0.5.*",
         "bican/roles": "2.1.*",
         "sammyk/laravel-facebook-sdk": "^3.0",
-        "cartalyst/stripe-laravel": "4.0.*"
+        "cartalyst/stripe-laravel": "4.0.*",
+        "guzzlehttp/guzzle": "^6.2",
+        "barryvdh/laravel-cors": "^0.8.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

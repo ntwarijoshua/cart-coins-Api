@@ -161,6 +161,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Bican\Roles\RolesServiceProvider::class,
         SammyK\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
 
 
     ],

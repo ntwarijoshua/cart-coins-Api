@@ -11,6 +11,8 @@
 |
 */
 
+Route::group(['middleware' => 'cors'], function(Router $router){
+   // $router->get('api', 'ApiController@index');
 
 Route::get('/', function () {
     return view('welcome');
@@ -120,8 +122,12 @@ Route::group(['prefix' => 'api/v1'], function () {
             //User reward route
             Route::resource('user-reward', 'UserRewardsController');
 
+            //News letter
+            Route::resource('newsletter', 'NewsLettersController');
+
 
         });
     });
 });
 
+});
