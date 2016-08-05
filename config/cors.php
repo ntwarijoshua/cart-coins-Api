@@ -11,7 +11,7 @@ return [
      | to accept any value.
      |
      */
-    'supportsCredentials' => false,
+    'supportsCredentials' => true,
     'allowedOrigins' => ['http://discountville.local'],
     'allowedHeaders' => ['*'],
     'allowedMethods' => ['*'],
