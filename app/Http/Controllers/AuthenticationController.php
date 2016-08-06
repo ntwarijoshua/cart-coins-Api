@@ -16,7 +16,7 @@ class AuthenticationController extends Controller
     public function facebook(Request $request){
 
         $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6IlJveSIsInJvbGUiOiJhY2NvdW50Lm1hbmFnZXIiLCJzdWIiOjUyLCJpc3MiOiJodHRwOlwvXC90ZXN0LmR1bGwtYXBpLmFwcHJlY2lhdGUuYmVcL2FwaVwvdjFcL2F1dGhlbnRpY2F0ZSIsImlhdCI6MTQ3MDM5MDEzNSwiZXhwIjoxNDcwMzkzNzM1LCJuYmYiOjE0NzAzOTAxMzUsImp0aSI6IjBiN2IyOTZkOGRmMzY5MmIwMGRlNjM1YjMzZjcwOTY2In0.AvTrRSlmXkdiEweAx5sLuzifp2ivrOtyiABsYiieTso';
-        return response()->json(compact($token));
+        return response()->json(compact($token))
     }
     public function authenticate(Request $request)
     {
