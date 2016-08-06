@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -32,8 +33,29 @@ class AuthenticationController extends Controller
 
 
     public function facebook(Request $request){
-        $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6IlJveSIsInJvbGUiOiJhY2NvdW50Lm1hbmFnZXIiLCJzdWIiOjUyLCJpc3MiOiJodHRwOlwvXC90ZXN0LmR1bGwtYXBpLmFwcHJlY2lhdGUuYmVcL2FwaVwvdjFcL2F1dGhlbnRpY2F0ZSIsImlhdCI6MTQ3MDM5MDEzNSwiZXhwIjoxNDcwMzkzNzM1LCJuYmYiOjE0NzAzOTAxMzUsImp0aSI6IjBiN2IyOTZkOGRmMzY5MmIwMGRlNjM1YjMzZjcwOTY2In0.AvTrRSlmXkdiEweAx5sLuzifp2ivrOtyiABsYiieTso'
-        return response()->json(compact($token));
+        $client = new Client();
+        $params = [
+            'code' => $request->input('code'),
+            'client_id' => $request->input('clientId'),
+            'redirect_uri' => $request->input('redirectUri'),
+            'client_secret' => '1179632552056976'
+        ];
+        // Step 1. Exchange authorization code for access token.
+        $accessTokenResponse = $client->request('GET', 'https://graph.facebook.com/v2.5/oauth/access_token', [
+            'query' => $params
+        ]);
+        $accessToken = json_decode($accessTokenResponse->getBody(), true);
+
+        $fields = 'id,email,first_name,last_name,link,name';
+        $profileResponse = $client->request('GET', 'https://graph.facebook.com/v2.5/me', [
+            'query' => [
+                'access_token' => $accessToken['access_token'],
+                'fields' => $fields
+            ]
+        ]);
+        $profile = json_decode($profileResponse->getBody(), true);
+
+        return response()->json(compact($accessToken));
     }
 
 }
