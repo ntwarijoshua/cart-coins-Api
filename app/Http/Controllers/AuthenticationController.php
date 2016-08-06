@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -54,7 +55,7 @@ class AuthenticationController extends Controller
             ]
         ]);
         $profile = json_decode($profileResponse->getBody(), true);
-        $
+        Log::info('This is some useful information.');
         return response()->json(compact('from-cartCoin',$accessToken));
     }
 
