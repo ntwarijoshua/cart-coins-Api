@@ -39,7 +39,7 @@
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AuthenticationController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.6919918">
-              <caret line="34" column="68" selection-start-line="34" selection-start-column="68" selection-end-line="34" selection-end-column="68" />
+              <caret line="35" column="46" selection-start-line="35" selection-start-column="46" selection-end-line="35" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -692,7 +692,7 @@
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AuthenticationController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6919918">
-          <caret line="34" column="68" selection-start-line="34" selection-start-column="68" selection-end-line="34" selection-end-column="68" />
+          <caret line="35" column="46" selection-start-line="35" selection-start-column="46" selection-end-line="35" selection-end-column="46" />
           <folding />
         </state>
       </provider>
