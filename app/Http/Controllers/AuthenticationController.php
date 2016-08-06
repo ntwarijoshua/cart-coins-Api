@@ -45,7 +45,7 @@ class AuthenticationController extends Controller
             'code' => $request->input('code'),
             'client_id' => $request->input('clientId'),
             'redirect_uri' => $request->input('redirectUri'),
-            'client_secret' => '1179632552056976'
+            'client_secret' => Config::get('app.facebook_key')
         ];
 
         //Exchange Authorization code for Access Token.
