@@ -48,12 +48,55 @@ class AuthenticationController extends Controller
             'client_secret' => Config::get('app.facebook_key')
         ];
 
-        //Exchange Authorization code for Access Token
+        //Exchange Authorization code for Access Token.
         $facebookAccessTokenResponse = $client->request('GET','https://graph.facebook.com/v2.5/oauth/access_token',[
             'query'=>$params
         ]);
 
         $facebookAccessToken = json_decode($facebookAccessTokenResponse->getBody(),true);
+
+        //Get Profile From Facebook.
+        $fields = 'id,email,first_name,last_name,name';
+        $facebookProfileResponse = $client->request('GET','https://graph.facebook.com/v2.5/me',[
+            'query'=>[
+                'access_token'=>$facebookAccessToken,
+                'field'=>$fields
+            ]
+        ]);
+
+        $facebookProfile = json_decode($facebookProfileResponse->getBody(),true);
+
+        //If User is Authenticated
+        if($request->header('Authorization')){
+            $user = User::where('facebook_id',$facebookProfile['id']);
+            if($user->first()){
+                return response()->json(['message'=>'There is already a facebook account that belongs to you!'],409);
+            }
+
+            $user = Auth::user();
+            $user->facebook_id = $facebookProfile['id'];
+            $user->email = $user->email ?: $facebookProfile['email'];
+            $user->display_name = $facebookProfile['name'];
+            $user->save();
+
+            return response()->json(['token'=>$this->createToken($user)]);
+        }else{
+            //If user is not authenticated.
+            $user = User::where('facebook_id','=',$facebookProfile['id']);
+            if($user->first()){
+                return response()->json(['token'=>$this->createToken($user)]);
+            }
+
+            $user = new User();
+            $user->facebook_id = $facebookProfile['id'];
+            $user->email = $facebookProfile['email'];
+            $user->first_name = $facebookProfile['first_name'];
+            $user->last_name = $facebookProfile['last_name'];
+            $user->display_name = $facebookProfile['name'];
+            $user->save();
+
+            return response()->json(['token'=>$this->createToken($user)]);
+        }
     }
 
 
