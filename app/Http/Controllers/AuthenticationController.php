@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -26,6 +27,11 @@ class AuthenticationController extends Controller
 
         // all good so return the token
         return response()->json(compact('token'));
+    }
+
+
+    public function facebook(Request $request){
+        return JsonResponse::create($request);
     }
 
 }

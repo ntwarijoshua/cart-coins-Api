@@ -54,7 +54,10 @@ Route::get('/facebook/callback', function(SammyK\LaravelFacebookSdk\LaravelFaceb
 
 
 
+
+
 Route::group(['prefix' => 'api/v1','middleware'=>['api']], function () {
+    Route::post('/test','AuthenticationController@facebook');
     Route::post('register', 'UsersController@register');
     Route::post('login','AuthenticationController@authenticate');
 
