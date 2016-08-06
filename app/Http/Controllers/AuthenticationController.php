@@ -39,6 +39,10 @@ class AuthenticationController extends Controller
         }
     }
 
+    public function facebookAuth(Request $request){
+        $client = new Client();
+    }
+
 
 
 
