@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\User;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-
+use Firebase\JWT\JWT;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -13,24 +16,34 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthenticationController extends Controller
 {
-    public function authenticate(Request $request)
-    {
-        // grab credentials from the request
-        $credentials = $request->only('email', 'password');
+    public function  createToken($user){
+        $payload = [
+            'sub' => $user->id,
+            'iat' => time(),
+            'exp' => time() + (2 * 7 * 24 * 60 * 60)
+        ];
 
-        try {
-            // attempt to verify the credentials and create a token for the user
-            if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 401);
-            }
-        } catch (JWTException $e) {
-            // something went wrong whilst attempting to encode the token
-            return response()->json(['error' => 'could_not_create_token'], 500);
+        return JWT::encode($payload,Config::get('app.key'));
+    }
+
+    public function authenticate(Request $request){
+        $email = $request->get("email");
+        $password = $request->get("password");
+
+        $user = User::where('email','=',$email)->first();
+        if(!$user){
+            return JsonResponse::create(['error','Wrong email and/or password'],401);
         }
 
-        // all good so return the token
-        return response()->json(compact('token'));
+        if(Hash::check($password,$user->password)){
+
+            unset($user->password);
+            return response()->json(['token'=>$this->createToken($user)]);
+        }else{
+            return JsonResponse::create(['error','Wrong email and/or password'],401);
+        }
     }
+
 
 
 

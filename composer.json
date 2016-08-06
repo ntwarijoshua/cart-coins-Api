@@ -12,7 +12,8 @@
         "sammyk/laravel-facebook-sdk": "^3.0",
         "cartalyst/stripe-laravel": "4.0.*",
         "guzzlehttp/guzzle": "^6.2",
-        "barryvdh/laravel-cors": "^0.8.1"
+        "barryvdh/laravel-cors": "^0.8.1",
+        "firebase/php-jwt": "^4.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
