@@ -31,9 +31,8 @@ class AuthenticationController extends Controller
     }
 
 
-    public function facebook(){
-        $user = Auth::user();
-        return JsonResponse::create($user);
+    public function facebook(Request $request){
+        return JsonResponse::create($request);
     }
 
 }
