@@ -54,8 +54,8 @@ class AuthenticationController extends Controller
             ]
         ]);
         $profile = json_decode($profileResponse->getBody(), true);
-        $fakeToken = '09403';
-        return response()->json(compact($fakeToken));
+        $
+        return response()->json(compact('from-cartCoin',$accessToken));
     }
 
 }
