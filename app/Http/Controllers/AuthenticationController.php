@@ -14,37 +14,14 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class AuthenticationController extends Controller
 {
     public function facebook(Request $request){
-        $client = new Client();
-        $params = [
-            'code' => $request->input('code'),
-            'client_id' => $request->input('clientId'),
-            'redirect_uri' => $request->input('redirectUri'),
-            'client_secret' => '1179632552056976'
-        ];
-        // Step 1. Exchange authorization code for access token.
-        $accessTokenResponse = $client->request('GET', 'https://graph.facebook.com/v2.5/oauth/access_token', [
-            'query' => $params
-        ]);
-        $accessToken = json_decode($accessTokenResponse->getBody(), true);
 
-        $fields = 'id,email,first_name,last_name,link,name';
-        $profileResponse = $client->request('GET', 'https://graph.facebook.com/v2.5/me', [
-            'query' => [
-                'access_token' => $accessToken['access_token'],
-                'fields' => $fields
-            ]
-        ]);
-        $profile = json_decode($profileResponse->getBody(), true);
-        Log::info('This is some useful information.');
-        $creds = ['email' => 'admin@admin.com','password'=>'admin'];
         $token = 'i got this back here';
         return response()->json(compact($token));
     }
-    public function authenticate($credParams)
+    public function authenticate(Request $request)
     {
         // grab credentials from the request
-        $credentials = $credParams;
-            //$request->only('email', 'password');
+        $credentials = $request->only('email', 'password');
 
         try {
             // attempt to verify the credentials and create a token for the user
