@@ -54,8 +54,8 @@ class AuthenticationController extends Controller
             ]
         ]);
         $profile = json_decode($profileResponse->getBody(), true);
-
-        return response()->json(compact($accessToken));
+        $fakeToken = '09403';
+        return response()->json(compact($fakeToken));
     }
 
 }
