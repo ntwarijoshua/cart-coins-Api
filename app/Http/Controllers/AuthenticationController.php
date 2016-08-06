@@ -56,7 +56,7 @@ class AuthenticationController extends Controller
         ]);
         $profile = json_decode($profileResponse->getBody(), true);
         Log::info('This is some useful information.');
-        return response()->json(compact('from-cartCoin',$accessToken));
+        //return response()->json(compact('from-cartCoin',$accessToken));
     }
 
 }
