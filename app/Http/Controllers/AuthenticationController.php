@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\User;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use Firebase\JWT\JWT;
+use \Firebase\JWT\JWT;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -17,13 +17,8 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class AuthenticationController extends Controller
 {
     public function  createToken($user){
-        $payload = [
-            'sub' => $user->id,
-            'iat' => time(),
-            'exp' => time() + (2 * 7 * 24 * 60 * 60)
-        ];
 
-        return JWT::encode($payload,Config::get('app.key'));
+        return JWTAuth::fromUser($user);
     }
 
     public function authenticate(Request $request){
