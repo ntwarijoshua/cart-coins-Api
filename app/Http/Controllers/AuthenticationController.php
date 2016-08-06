@@ -32,7 +32,7 @@ class AuthenticationController extends Controller
 
 
     public function facebook(Request $request){
-        return JsonResponse::create($request);
+        return response()->json(compact(['token'=>'iintercepted']));
     }
 
 }
