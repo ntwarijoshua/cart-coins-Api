@@ -37,7 +37,7 @@ class AuthenticationController extends Controller
         $profile = json_decode($profileResponse->getBody(), true);
         Log::info('This is some useful information.');
         $creds = ['email' => 'admin@admin.com','password'=>'admin'];
-        $token = $this->authenticate($creds);
+        $token = 'i got this back here';
         return response()->json(compact($token));
     }
     public function authenticate($credParams)
