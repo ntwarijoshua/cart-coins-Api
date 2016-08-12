@@ -81,10 +81,9 @@ class AuthenticationController extends Controller
             return response()->json(['token'=>$this->createToken($user)]);
         }else{
             //If user is not authenticated.
-            $fbuser = User::where('facebook_id',$facebookProfile['id'])->first();
-            if($fbuser){
-                return response()->json($fbuser);
-                //return response()->json(['token'=>$this->createToken($user)]);
+            $user = User::where('facebook_id',$facebookProfile['id'])->first();
+            if($user){
+                return response()->json(['token'=>$this->createToken($user)]);
             }
 
             $user = new User();
