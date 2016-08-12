@@ -17,8 +17,8 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class AuthenticationController extends Controller
 {
     public function  createToken($user){
-        //return JWTAuth::fromUser($user);
-        return response()->json($user);
+        return JWTAuth::fromUser($user);
+
     }
 
     public function authenticate(Request $request){
@@ -64,7 +64,7 @@ class AuthenticationController extends Controller
         ]);
 
         $facebookProfile = json_decode($facebookProfileResponse->getBody(),true);
-        return response()->json($facebookProfile);
+
         //If User is Authenticated
         if($request->header('Authorization')){
             $user = User::where('facebook_id',$facebookProfile['id']);
@@ -83,7 +83,8 @@ class AuthenticationController extends Controller
             //If user is not authenticated.
             $user = User::where('facebook_id','=',$facebookProfile['id']);
             if($user->first()){
-                return response()->json(['token'=>$this->createToken($user)]);
+                return response()->json($user);
+                //return response()->json(['token'=>$this->createToken($user)]);
             }
 
             $user = new User();
