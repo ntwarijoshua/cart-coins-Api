@@ -59,7 +59,7 @@ class AuthenticationController extends Controller
         $facebookProfileResponse = $client->request('GET','https://graph.facebook.com/v2.5/me',[
             'query'=>[
                 'access_token'=>$facebookAccessToken['access_token'],
-                'field'=>$fields
+                'fields'=>$fields
             ]
         ]);
 
