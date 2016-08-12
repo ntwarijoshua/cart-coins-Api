@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="42283bfe-fe6c-4766-9aea-3d00ae974a74" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/AuthenticationController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/AuthenticationController.php" />
     </list>
     <ignored path="cart-coins.iws" />
