@@ -53,12 +53,12 @@ class AuthenticationController extends Controller
         ]);
 
         $facebookAccessToken = json_decode($facebookAccessTokenResponse->getBody(),true);
-        return response()->json($facebookAccessToken['access_token']);
+        //return response()->json($facebookAccessToken['access_token']);
         //Get Profile From Facebook.
         $fields = 'id,email,first_name,last_name,name';
         $facebookProfileResponse = $client->request('GET','https://graph.facebook.com/v2.5/me',[
             'query'=>[
-                'access_token'=>$facebookAccessToken,
+                'access_token'=>$facebookAccessToken['access_token'],
                 'field'=>$fields
             ]
         ]);
