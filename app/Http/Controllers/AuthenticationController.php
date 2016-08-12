@@ -47,13 +47,12 @@ class AuthenticationController extends Controller
             'redirect_uri' => $request->input('redirectUri'),
             'client_secret' => Config::get('app.facebook_secret')
         ];
-        //return response()->json($params); exit("test");
         //Exchange Authorization code for Access Token.
         $facebookAccessTokenResponse = $client->request('GET','https://graph.facebook.com/v2.5/oauth/access_token',[
             'query'=>$params
         ]);
 
-        $facebookAccessToken = json_decode($facebookAccessTokenResponse->getBody(),true);
+        $facebookAccessToken = (String)json_decode($facebookAccessTokenResponse->getBody(),true);
 
         //Get Profile From Facebook.
         $fields = 'id,email,first_name,last_name,name';
