@@ -1,2 +1,2 @@
 # cart-coins-Api
-Api for the cart-coins app Developed in Laravel
+Api for the cart-coins app Developed in Laravel 5
