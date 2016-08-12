@@ -64,7 +64,7 @@ class AuthenticationController extends Controller
         ]);
 
         $facebookProfile = json_decode($facebookProfileResponse->getBody(),true);
-
+        return response()->json($facebookProfile);
         //If User is Authenticated
         if($request->header('Authorization')){
             $user = User::where('facebook_id',$facebookProfile['id']);
